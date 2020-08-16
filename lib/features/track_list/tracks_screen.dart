@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_example_app/core/app_router.dart';
 import 'package:flutter_example_app/features/track_details/details_screen.dart';
-import 'package:flutter_example_app/core/router.dart';
+import 'package:flutter_example_app/generated/i18n.dart';
 import 'package:flutter_example_app/repository/models/track.dart';
 import 'package:flutter_example_app/repository/tracks_repository.dart';
 
@@ -10,7 +11,7 @@ class TracksScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Preview player')),
+      appBar: AppBar(title: Text(I18n.of(context).previewPlayer)),
       body: WillPopScope(
         onWillPop: () async {
           showDialog(

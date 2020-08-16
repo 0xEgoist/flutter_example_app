@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_example_app/generated/i18n.dart';
 
 class DetailsScreen extends StatelessWidget {
   final DetailsScreenArg arg;
@@ -9,7 +10,7 @@ class DetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Track Details')),
+      appBar: AppBar(title: Text(I18n.of(context).trackDetails)),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -33,9 +34,9 @@ class DetailsScreen extends StatelessWidget {
             ),
             RaisedButton(
               onPressed: () {
-                Navigator.pop(context, "OK");
+                Navigator.pop(context, I18n.of(context).ok);
               },
-              child: Text("Go back with result - OK"),
+              child: Text(I18n.of(context).goBackWithResult),
             )
           ],
         ),
