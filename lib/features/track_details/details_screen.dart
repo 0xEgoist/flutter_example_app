@@ -14,7 +14,23 @@ class DetailsScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(arg.title),
+            Image.network(
+              arg.imageUrl,
+              width: 200,
+              height: 200,
+              fit: BoxFit.fill,
+            ),
+            SizedBox.fromSize(
+              size: Size(0, 20),
+            ),
+            Text(
+              arg.trackName,
+              style: TextStyle(fontSize: 20),
+            ),
+            Text(arg.artistName),
+            SizedBox.fromSize(
+              size: Size(0, 20),
+            ),
             RaisedButton(
               onPressed: () {
                 Navigator.pop(context, "OK");
@@ -29,7 +45,16 @@ class DetailsScreen extends StatelessWidget {
 }
 
 class DetailsScreenArg {
-  final String title;
+  final int artistId;
+  final String artistName;
+  final String imageUrl;
+  final int trackId;
+  final String trackName;
 
-  DetailsScreenArg(this.title);
+  DetailsScreenArg(
+      {this.artistId,
+      this.artistName,
+      this.imageUrl,
+      this.trackId,
+      this.trackName});
 }
