@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_example_app/core/app_router.dart';
 import 'package:flutter_example_app/features/track_details/details_screen.dart';
 import 'package:flutter_example_app/features/track_list/bloc/track_list_bloc.dart';
+import 'package:flutter_example_app/features/web_view_etc/map_view.dart';
+import 'package:flutter_example_app/features/web_view_etc/video_player.dart';
+import 'package:flutter_example_app/features/web_view_etc/web_view.dart';
 import 'package:flutter_example_app/generated/i18n.dart';
 import 'package:flutter_example_app/repository/models/track.dart';
 
@@ -18,52 +19,73 @@ class _TracksScreenState extends State<TracksScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _trackListBloc = BlocProvider.of<TrackListBloc>(context);
-    return Scaffold(
-      appBar: AppBar(title: Text(I18n.of(context).previewPlayer)),
-      body: WillPopScope(
-        onWillPop: () async {
-          showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: Text(I18n.of(context).exit_question),
-                  actions: <Widget>[
-                    FlatButton(
-                      child: Text(I18n.of(context).ok),
-                      onPressed: () {
-                        SystemNavigator.pop();
-                      },
-                    ),
-                    FlatButton(
-                      child: Text(I18n.of(context).no),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    )
-                  ],
-                );
-              });
-          return false;
-        },
-        child: BlocBuilder(
-          cubit: _trackListBloc,
-          builder: (context, TrackListState state) {
-            if (state is TrackListLoading) {
-              _trackListBloc.add(GetTrackList());
-              return Center(
-                child: CircularProgressIndicator(
-                  backgroundColor: Colors.blue,
-                ),
-              );
-            }
-            if (state is TrackListLoaded) {
-              return _buildTracksList(state.tracksResponse);
-            }
-            return Center(
-              child: Text(I18n.of(context).something_went_wrong),
-            );
-          },
+//<<<<<<< HEAD
+//    _trackListBloc = BlocProvider.of<TrackListBloc>(context);
+//    return Scaffold(
+//      appBar: AppBar(title: Text(I18n.of(context).previewPlayer)),
+//      body: WillPopScope(
+//        onWillPop: () async {
+//          showDialog(
+//              context: context,
+//              builder: (BuildContext context) {
+//                return AlertDialog(
+//                  title: Text(I18n.of(context).exit_question),
+//                  actions: <Widget>[
+//                    FlatButton(
+//                      child: Text(I18n.of(context).ok),
+//                      onPressed: () {
+//                        SystemNavigator.pop();
+//                      },
+//                    ),
+//                    FlatButton(
+//                      child: Text(I18n.of(context).no),
+//                      onPressed: () {
+//                        Navigator.pop(context);
+//                      },
+//                    )
+//                  ],
+//                );
+//              });
+//          return false;
+//        },
+//        child: BlocBuilder(
+//          cubit: _trackListBloc,
+//          builder: (context, TrackListState state) {
+//            if (state is TrackListLoading) {
+//              _trackListBloc.add(GetTrackList());
+//              return Center(
+//                child: CircularProgressIndicator(
+//                  backgroundColor: Colors.blue,
+//                ),
+//              );
+//            }
+//            if (state is TrackListLoaded) {
+//              return _buildTracksList(state.tracksResponse);
+//            }
+//            return Center(
+//              child: Text(I18n.of(context).something_went_wrong),
+//            );
+//          },
+//=======
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+          bottom: TabBar(
+            tabs: [
+              Tab(text: 'WebView'),
+              Tab(text: 'MapView'),
+              Tab(text: 'VideoPlayer'),
+            ],
+          ),
+          title: Text('Sample App'),
+        ),
+        body: TabBarView(
+          children: [
+            WebViewScreen(),
+            MapViewScreen(),
+            VideoPlayerScreen(),
+          ],
         ),
       ),
     );
