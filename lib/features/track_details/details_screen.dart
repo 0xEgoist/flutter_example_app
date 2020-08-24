@@ -45,6 +45,7 @@ class DetailsScreen extends StatelessWidget {
   }
 }
 
+@immutable
 class DetailsScreenArg {
   final int artistId;
   final String artistName;

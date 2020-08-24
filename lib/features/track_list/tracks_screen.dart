@@ -1,15 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_example_app/core/app_router.dart';
 import 'package:flutter_example_app/features/track_details/details_screen.dart';
+import 'package:flutter_example_app/features/track_list/bloc/track_list_bloc.dart';
 import 'package:flutter_example_app/generated/i18n.dart';
 import 'package:flutter_example_app/repository/models/track.dart';
-import 'package:flutter_example_app/repository/tracks_repository.dart';
 
-class TracksScreen extends StatelessWidget {
+class TracksScreen extends StatefulWidget {
+  @override
+  _TracksScreenState createState() => _TracksScreenState();
+}
+
+class _TracksScreenState extends State<TracksScreen> {
+  TrackListBloc _trackListBloc;
+
   @override
   Widget build(BuildContext context) {
+    _trackListBloc = BlocProvider.of<TrackListBloc>(context);
     return Scaffold(
       appBar: AppBar(title: Text(I18n.of(context).previewPlayer)),
       body: WillPopScope(
@@ -18,16 +27,16 @@ class TracksScreen extends StatelessWidget {
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  title: Text('Are you sure you want to exit the application?'),
+                  title: Text(I18n.of(context).exit_question),
                   actions: <Widget>[
                     FlatButton(
-                      child: Text("OK"),
+                      child: Text(I18n.of(context).ok),
                       onPressed: () {
                         SystemNavigator.pop();
                       },
                     ),
                     FlatButton(
-                      child: Text("NO"),
+                      child: Text(I18n.of(context).no),
                       onPressed: () {
                         Navigator.pop(context);
                       },
@@ -37,40 +46,55 @@ class TracksScreen extends StatelessWidget {
               });
           return false;
         },
-        child: FutureBuilder(
-          future: tracksRepository.getTracks(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              var trackResponse = snapshot.data as TracksResponse;
-              var tracksList = trackResponse.tracks;
-              var error = trackResponse.error;
-              if (error != "") {
-                return Center(
-                  child: Text("We have some error: $error"),
-                );
-              }
-              if (tracksList.length != 0) {
-                return ListView.builder(
-                  itemCount: tracksList.length,
-                  itemBuilder: (context, index) => TrackItem(
-                    tracksList[index],
-                  ),
-                );
-              } else {
-                return Center(
-                  child: Text("List of tracks is empty"),
-                );
-              }
+        child: BlocBuilder(
+          cubit: _trackListBloc,
+          builder: (context, TrackListState state) {
+            if (state is TrackListLoading) {
+              _trackListBloc.add(GetTrackList());
+              return Center(
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.blue,
+                ),
+              );
+            }
+            if (state is TrackListLoaded) {
+              return _buildTracksList(state.tracksResponse);
             }
             return Center(
-              child: CircularProgressIndicator(
-                backgroundColor: Colors.blue,
-              ),
+              child: Text(I18n.of(context).something_went_wrong),
             );
           },
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _trackListBloc.close();
+  }
+
+  Widget _buildTracksList(TracksResponse tracksResponse) {
+    final tracksList = tracksResponse.tracks;
+    final error = tracksResponse.error;
+    if (error.isNotEmpty) {
+      return Center(
+        child: Text(I18n.of(context).some_error + error),
+      );
+    }
+    if (tracksList.isNotEmpty) {
+      return ListView.builder(
+        itemCount: tracksList.length,
+        itemBuilder: (context, index) => TrackItem(
+          tracksList[index],
+        ),
+      );
+    } else {
+      return Center(
+        child: Text(I18n.of(context).empty_list),
+      );
+    }
   }
 }
 

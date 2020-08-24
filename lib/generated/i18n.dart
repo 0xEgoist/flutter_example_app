@@ -38,8 +38,20 @@ class I18n implements WidgetsLocalizations {
   String get trackDetails => "Track Details";
   /// "Go back with result - OK"
   String get goBackWithResult => "Go back with result - OK";
+  /// "Are you sure you want to exit the application?"
+  String get exit_question => "Are you sure you want to exit the application?";
+  /// "Something went wrong!"
+  String get something_went_wrong => "Something went wrong!";
+  /// "We have some error: "
+  String get some_error => "We have some error: ";
+  /// "List of tracks is empty"
+  String get empty_list => "List of tracks is empty";
+  /// "No route defined for "
+  String get no_route => "No route defined for ";
   /// "OK"
   String get ok => "OK";
+  /// "NO"
+  String get no => "NO";
 }
 
 class _I18n_en_US extends I18n {
@@ -61,9 +73,27 @@ class _I18n_ru_RU extends I18n {
   /// "Вернуться назад с результатом - Окей"
   @override
   String get goBackWithResult => "Вернуться назад с результатом - Окей";
-  /// "Окей"
+  /// "Вы уверены что хотите выйти из приложения?"
   @override
-  String get ok => "Окей";
+  String get exit_question => "Вы уверены что хотите выйти из приложения?";
+  /// "Что то пошло не так!"
+  @override
+  String get something_went_wrong => "Что то пошло не так!";
+  /// "Мы получили ошибку: "
+  @override
+  String get some_error => "Мы получили ошибку: ";
+  /// "Список песен пуст"
+  @override
+  String get empty_list => "Список песен пуст";
+  /// "Нет пути для "
+  @override
+  String get no_route => "Нет пути для ";
+  /// "OK"
+  @override
+  String get ok => "OK";
+  /// "НЕТ"
+  @override
+  String get no => "НЕТ";
 
   @override
   TextDirection get textDirection => TextDirection.ltr;

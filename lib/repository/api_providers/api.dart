@@ -1,16 +1,15 @@
 import 'dart:convert';
 
+import 'package:flutter_example_app/repository/api_providers/endpoints.dart';
 import 'package:flutter_example_app/repository/models/track.dart';
 import 'package:flutter_example_app/core/network_utils.dart';
 import 'package:dio/dio.dart';
 
-class TracksProvider {
+class Api {
   Future<TracksResponse> getTracks() async {
     try {
-      Response response = await dio.get(
-          "https://itunes.apple.com/search?term=imagine&entity=musicTrack");
-      var decodedJson = jsonDecode(response.data);
-
+      Response response = await dio.get(tracksUrl);
+      final decodedJson = jsonDecode(response.data);
       return TracksResponse.fromJson(decodedJson);
     } catch (error, stacktrace) {
       print("Exception occured: $error stackTrace: $stacktrace");
