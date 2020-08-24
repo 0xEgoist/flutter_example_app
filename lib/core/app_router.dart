@@ -8,7 +8,7 @@ class Routes {
   static const detailsScreen = '/details';
 }
 
-class Router {
+class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routes.tracksScreen:
