@@ -1,14 +1,17 @@
 import 'dart:convert';
 
+import 'package:flutter_example_app/di/app_module.dart';
 import 'package:flutter_example_app/repository/api_providers/endpoints.dart';
 import 'package:flutter_example_app/repository/models/track.dart';
-import 'package:flutter_example_app/core/network_utils.dart';
 import 'package:dio/dio.dart';
 
 class Api {
-  Future<TracksResponse> getTracks() async {
+
+  final Dio _dio = inject<Dio>();
+
+  Future<TracksResponse> getTracks(String trackName) async {
     try {
-      Response response = await dio.get(tracksUrl);
+      Response response = await _dio.get(getTracksUrl(trackName));
       final decodedJson = jsonDecode(response.data);
       return TracksResponse.fromJson(decodedJson);
     } catch (error, stacktrace) {

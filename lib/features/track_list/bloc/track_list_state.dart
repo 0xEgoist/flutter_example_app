@@ -10,10 +10,11 @@ abstract class TrackListState extends Equatable {
 class TrackListLoading extends TrackListState {}
 
 class TrackListLoaded extends TrackListState {
-  final TracksResponse tracksResponse;
+  final int tracksLength;
+  final String error;
 
-  TrackListLoaded(this.tracksResponse);
+  TrackListLoaded({this.tracksLength, this.error});
 
   @override
-  List<Object> get props => [tracksResponse];
+  List<Object> get props => [error];
 }

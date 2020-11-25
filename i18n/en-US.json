@@ -7,6 +7,8 @@
   "some_error": "We have some error: ",
   "empty_list": "List of tracks is empty",
   "no_route": "No route defined for ",
+  "search_tracks": "Search tracks",
+  "current_track": "Current track",
   "ok": "OK",
   "no": "NO"
 }
