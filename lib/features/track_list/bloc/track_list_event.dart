@@ -1,10 +1,14 @@
 part of 'track_list_bloc.dart';
 
 abstract class TrackListEvent extends Equatable {
-  const TrackListEvent();
+  final String searchTrackName;
+
+  const TrackListEvent(this.searchTrackName);
 
   @override
-  List get props => [];
+  List get props => [searchTrackName];
 }
 
-class GetTrackList extends TrackListEvent {}
+class GetTrackList extends TrackListEvent {
+  GetTrackList(String searchTrackName) : super(searchTrackName);
+}

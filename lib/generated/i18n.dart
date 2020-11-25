@@ -48,6 +48,10 @@ class I18n implements WidgetsLocalizations {
   String get empty_list => "List of tracks is empty";
   /// "No route defined for "
   String get no_route => "No route defined for ";
+  /// "Search tracks"
+  String get search_tracks => "Search tracks";
+  /// "Current track"
+  String get current_track => "Current track";
   /// "OK"
   String get ok => "OK";
   /// "NO"
@@ -88,6 +92,12 @@ class _I18n_ru_RU extends I18n {
   /// "Нет пути для "
   @override
   String get no_route => "Нет пути для ";
+  /// "Поиск песен"
+  @override
+  String get search_tracks => "Поиск песен";
+  /// "Текущая песня"
+  @override
+  String get current_track => "Текущая песня";
   /// "OK"
   @override
   String get ok => "OK";

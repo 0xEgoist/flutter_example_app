@@ -1,3 +1,3 @@
 const itunes = "https://itunes.apple.com/";
 
-final tracksUrl = itunes + "search?term=imagine&entity=musicTrack";
+String getTracksUrl(String trackName) => itunes + "search?term=$trackName&entity=musicTrack";
